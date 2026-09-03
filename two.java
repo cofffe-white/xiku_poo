@@ -2,12 +2,13 @@ import java.util.Scanner;
 public class two {
     public static void main(String[] args) {
         Scanner s = new Scanner(System.in);
-        System.out.println("o gustavo é pai? ");
-        String r = s.next();
-        if( r.equals("sim")){
-            System.out.println("o gustavo é pai");
-        } else {
-            System.out.println("ele nao fez ainda");
+        System.out.println("me diga um numero entre 10 e 20: ");
+        Int r = s.nextInt();
+        if(r > 10 && r < 20){
+            System.out.println("numero certo");
+        }
+        else{
+            System.out.println("incorreto");
         }
     }
 }
