@@ -33,34 +33,57 @@ cão = Animal('Rex')
 
 print(cão.falar())
 print(cão.andar())'''
-def a():
-    class veiculo:
-        def __init__(self, nome):
+
+
+class Veiculo:
+    def __init__(self, nome):
+        self.nome = nome
+
+    def acelerar(self):
+        return f"{self.nome} está acelerando"
+
+
+class Carro(Veiculo):
+    def acelerar(self):
+        return f"{self.nome} está acelerando como um carro"
+
+
+class Moto(Veiculo):
+    def acelerar(self):
+        return f"{self.nome} está acelerando como uma moto"
+
+
+class Aviao(Veiculo):
+    def acelerar(self):
+        return f"{self.nome} está acelerando como um avião"
+
+def executar(veiculo):
+    return veiculo.acelerar()
+
+fusca = Carro("Fusca")
+honda = Moto("Honda")
+azul = Aviao("Azul")  
+     
+class comida:
+    def __init__(self,nome):
             self.nome = nome
+    def comer(self):
+            return f"{self.nome} está sendo devorada"
 
-        def acelerar(self):
-            return f"{self.nome} está acelerando"
-
-    class carro(veiculo):
-        def acelerar(self):
-            return f"{self.nome} está acelerando como um carro"
-
-    class moto(veiculo):
-        def acelerar(self):
-            return f"{self.nome} está acelerando como uma moto"
-
-    class aviao(veiculo):
-        def acelerar(self):
-            return f"{self.nome} está acelerando como um avião"
-
-    def ato(runrun):
-        runrun.acelerar()
-
-    fusca = carro("Fusca")
-    honda = moto('honda')
-    azul = aviao('azul')
-
-    ato(fusca)
-    ato(honda)
-    ato(azul)
-a()
+class pera(comida):
+    def comer(self):
+            return f"{self.nome} está sendo devorada como uma pera"
+class maca(comida):
+    def comer(self):
+            return f"{self.nome} está sendo devorada como uma maçã"
+class banana(comida):
+    def comer(self):
+            return f"{self.nome} está sendo devorada como uma banana"
+        
+def ato(fruta):
+        return fruta.comer()
+maca = maca("Maçã")
+banana = banana("Banana")
+pera = pera("Pera")
+    
+print(f"{ato(maca)},\n {ato(banana)},\n {ato(pera)}")
