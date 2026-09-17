@@ -1,40 +1,3 @@
-'''def o():
-    class clt:
-        def __init__(self, nome):
-            self.nome = nome
-        def trabalhar(self):
-            print(f"{self.nome} está trabalhando.")
-
-    class dev:
-        def __init__(self, nome):
-            self.nome = nome
-        def trabalhar(self):
-            print(f'{self.nome} está desenvolvendo.')
-
-    def ato(people):
-        people.trabalhar()
-
-    gusta = clt("Gustavo")
-    edi = dev("Edi")
-
-    ato(edi)
-    ato(gusta)
-
-#polimorfismo built-ins e operadores
-
-class Animal:
-    def __init__(self, nome):
-        self.nome = nome
-    def falar(self):
-        return f'{self.nome} faz som'
-    def andar(self):
-        return f'{self.nome} está andando'
-cão = Animal('Rex')
-
-print(cão.falar())
-print(cão.andar())'''
-
-
 class Veiculo:
     def __init__(self, nome):
         self.nome = nome
@@ -62,87 +25,75 @@ def executar(veiculo):
 
 fusca = Carro("Fusca")
 honda = Moto("Honda")
-azul = Aviao("Azul")  
-     
-#restaurante
+azul = Aviao("Azul")
+
 import time
-
-class restaurante:
-    def __init__(self,nome):
-        
+class Restaurante:
+    def __init__(self, nome, itens):
         self.nome = nome
-        
-    def pedir(self):
-        print("seu pedido está a caminho")
-        
-    def time(self):
-        time.sleep(10)
-        print("seu pedido chegou. Aproveite!")
-        
-class cafeteria(restaurante):
-    
-    def pedir(self):
-            print("seu pedido está a caminho")
-            
-    def time(self):
-        time.sleep(10)
-        print("seu pedido chegou. Aproveite!")
-            
-    def cardapio(self):
-        e = input('bem-vindo ao cardápio da cafeteria:\n1-expresso\n2-capuccino\n3-café com leite\n4-café gelado\n5-americano. \nDigite o que deseja:\n ')
-            
-class acaiteria(restaurante):
-    
-    def pedir(self):
-        print("seu pedido está a caminho")
-        
-    def time(self):
-        time.sleep(10)
-        print("seu pedido chegou. Aproveite!")
-        
-    def cardapio(self):
-        s = input('bem-vindo ao cardápio da acaiteria,:\n1-acai com granola\n2-acai com banana\n3-acai com morango\n4-acai com leite condensado\n5-acai com chocolate. \nDigite o que deseja:\n ')
-                
-class quiosque(restaurante):
-    
-    def pedir(self):
-        print("seu pedido está a caminho")
-    
-    def time(self):    
-        time.sleep(10)
-        print("seu pedido chegou. Aproveite!")
-    
-    def cardapio(self):
-        c = input('bem-vindo ao cardápio do quiosque,:\n1-sorvete\n2-picolé\n3-batata frita\n4-cachorro quente\n5-hamburguer. \nDigite o que deseja:\n')
-                
-        
-def ato(pedido):
-        return pedido.pedir()
-    
-def acao(esc):
-    return esc.cardapio()
+        self.itens = itens
 
-def car(dapio):
-    return dapio.time()
-    
-cafe1 = cafeteria('thalita paes')
-acai1 = acaiteria('lemania')
-quio1 = quiosque('comebem')
+    def cardapio(self):
+        print(f"\nCardápio do {self.nome}:")
+        for numero, item in enumerate(self.itens, start=1):
+            print(f"{numero} - {item}")
 
-p = input('bem-vindo ao restaurante, qual deseja ir?\n1-cafeteria\n2-acaiteria\n3-quiosque\nDigite o que deseja:\n')
-p = int(p)
+        while True:
+            try:
+                escolha = int(input("Escolha uma opção: "))
+            except ValueError:
+                print("Digite apenas um número.")
+                continue
 
-if p == 1:
-    print(acao(cafe1))
-    print(ato(cafe1))
-    print(car(cafe1))
-elif p == 2:
-    print(acao(acai1))
-    print(ato(acai1))
-    print(car(acai1))
-elif p ==3:
-    print(acao(quio1))
-    print(ato(quio1))
-    print(car(quio1))
-else:
-    print('opção inválida')
+            if 1 <= escolha <= len(self.itens):
+                return self.itens[escolha - 1]
+            print("Opção inválida. Tente novamente.")
+            
+    def pedir(self, item):
+        print(f"Pedido recebido: {item}.")
+        time.sleep(5)
+        print("Seu pedido está a caminho. Aproveite!")
+
+
+class Cafeteria(Restaurante):
+    def __init__(self):
+        super().__init__("cafeteria", [
+            "expresso", "capuccino", "café com leite", "café gelado", "americano"
+        ])
+
+
+class Acaiteria(Restaurante):
+    def __init__(self):
+        super().__init__("açaíteria", [
+            "açaí com granola", "açaí com banana", "açaí com morango",
+            "açaí com leite condensado", "açaí com chocolate"
+        ])
+
+
+class Quiosque(Restaurante):
+    def __init__(self):
+        super().__init__("quiosque", [
+            "sorvete", "picolé", "batata frita", "cachorro-quente", "hambúrguer"
+        ])
+
+
+def escolher_restaurante():
+    restaurantes = {
+        "1": Cafeteria(),
+        "2": Acaiteria(),
+        "3": Quiosque(),
+    }
+
+    print("Bem-vindo ao restaurante!")
+    print("1 - Cafeteria\n2 - Açaíteria\n3 - Quiosque")
+    while True:
+        escolha = input("Escolha onde deseja ir: ").strip()
+        if escolha in restaurantes:
+            return restaurantes[escolha]
+        print("Opção inválida. Escolha 1, 2 ou 3.")
+
+
+
+restaurante = escolher_restaurante()
+item = restaurante.cardapio()
+restaurante.pedir(item)
