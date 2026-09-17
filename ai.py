@@ -30,7 +30,7 @@ azul = Aviao("Azul")
 import time
 class Restaurante:
     def __init__(self, nome, itens):
-        self.nome = nome
+        self.__nome = nome
         self.itens = itens
 
     def cardapio(self):
