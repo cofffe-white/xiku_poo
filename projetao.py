@@ -8,8 +8,13 @@ class Login:
     def cadastro(self):
         self.__nome = input("Digite seu nome: ").strip()
         self.__email = input("Digite seu email: ").strip()
-        print("Cadastro concluido.")
-        return self.__nome, self.__email
+        if self.__nome != "" and "@" in self.__email:
+            print("Cadastro concluido.")
+            return self.__nome and self.__email
+        else:
+            print("Dados inválidos, tente novamente. \n ")
+            return self.cadastro()
+    
 
     def saudacao(self):
         nome = self.__nome if self.__nome else "cliente"
@@ -37,20 +42,20 @@ class Cardapio:
 
     def pedir(self, item):
         print(f"Pedido recebido: {item}.")
-        print("Seu pedido está a caminho. Aproveite!")
+        return item
 
 
-class BamBam(Cardapio):
+class Starbucks(Cardapio):
     def __init__(self):
-        super().__init__("BamBam", [
-            "expresso", "capuccino", "café com leite", "café gelado", "americano"
+        super().__init__("Starbucks", [
+            "expresso", "capuccino", "café com leite", "café gelado", "latte com morango"
         ])
 
 
 class Americanas(Cardapio):
     def __init__(self):
         super().__init__("Americanas", [
-            "camiseta", "calça", "boné", "tenis", "mochila"
+            "Fini", "Batom Garoto", "tenis", "mochila"
         ])
 
 
@@ -71,7 +76,7 @@ class Burguer_King(Cardapio):
 class Lojas:
     def __init__(self):
         self.lojas = {
-            "1": BamBam(),
+            "1": Starbucks(),
             "2": Americanas(),
             "3": Riachuelo(),
             "4": Burguer_King(),
@@ -79,7 +84,7 @@ class Lojas:
 
     def escolher_loja(self):
         print("Bem-vindo ao shopping!")
-        print("1 - BamBam\n2 - Americanas\n3 - Riachuelo\n4 - Burguer King")
+        print("1 - Starbucks\n2 - Americanas\n3 - Riachuelo\n4 - Burguer King")
 
         while True:
             escolha = input("Escolha onde deseja ir: ").strip()
@@ -97,6 +102,53 @@ def main():
     loja_escolhida = loja.escolher_loja()
     item = loja_escolhida.mostrar()
     loja_escolhida.pedir(item)
+    iniciar_entrega(item)
+
+
+class cliente:
+    def __init__(self, nome='', endereco='', telefone=''):
+        self.nome = nome
+        self.endereco = endereco
+        self.telefone = telefone
+
+
+class SistemaEntrega:
+    def __init__(self, item=""):
+        self.item = item
+        self.dados_cliente = None
+
+    def cadastrar_dados_entrega(self):
+        print("      SISTEMA DE ENTREGA      ")
+
+        while True:
+            nome = input("Informe o nome do destinatário: ").strip()
+            endereco = input("Informe o endereço completo de entrega: ").strip()
+            telefone_texto = input("Informe o telefone para contato: ").strip()
+
+            if nome and endereco and telefone_texto and telefone_texto.isdigit():
+                telefone = int(telefone_texto)
+                self.dados_cliente = cliente(nome, endereco, telefone)
+                print("\n Dados de entrega cadastrados com sucesso!")
+                return
+
+            print("Todos os campos devem ser preenchidos com dados válidos. Tente novamente.\n")
+
+    def confirmar_envio(self):
+        if not self.dados_cliente:
+            print("Nenhum cliente cadastrado para entrega.")
+            return
+
+        print("\n RESUMO DO ENVIO ")
+        print(f"Destinatário : {self.dados_cliente.nome}")
+        print(f"Pedido       : {self.item}")
+        print(f"Endereço     : {self.dados_cliente.endereco}")
+        print(f"Telefone     : {self.dados_cliente.telefone}")
+        print("Status       : Pedido saiu para entrega com o entregador!")
+        
+def iniciar_entrega(item):
+    entrega = SistemaEntrega(item)
+    entrega.cadastrar_dados_entrega()
+    entrega.confirmar_envio()
 
 
 if __name__ == "__main__":
